@@ -1,6 +1,6 @@
 # Variable Forgetting Factor RLS Algorithm
 
-*Adaptive Learning, Estimation and Supervision of Dynamical Systems (ALES) for the Master's Degree Course in Computer Engineering at the University of Bergamo.*
+*Adaptive Learning, Estimation and Supervision of Dynamical Systems (ALES) project for the Master's Degree Course in Computer Engineering at the University of Bergamo.*
 
 A MATLAB implementation and comparison of Recursive Least Squares (RLS) algorithms with variable forgetting factors for adaptive system identification.
 
