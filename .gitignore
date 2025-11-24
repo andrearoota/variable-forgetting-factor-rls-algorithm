@@ -1,0 +1,45 @@
+# File temporanei e di cache
+*.asv
+*.m~  
+*.bak  
+*.tmp  
+
+# File di output di MATLAB
+*.mex*  
+*.mlappinstall  
+*.mltbx  
+
+# File di log e di profiling
+*.log  
+*.prj  
+*.autosave  
+*.codegen/  
+*.slxc  
+
+# Cartelle di cache di MATLAB
+slprj/  
+sccprj/  
+codegen/  
+work/  
+simulink_cache/  
+*.slprj  
+
+# File di preferenze locali
+*.settings  
+*.matlab  
+*.mdl.r201*  
+*.slx.r201*  
+
+# File dei Live Script temporanei
+*.mlx.autosave  
+
+# Output e report
+*.html  
+*.txt  
+
+# Sistema operativo / IDE vari
+.DS_Store  
+Thumbs.db  
+.vscode/  
+.idea/  
+*.swp
