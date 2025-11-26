@@ -13,6 +13,9 @@
 clc
 clearvars
 
+addpath('utils/');
+addpath('algorithms/');
+
 % Set random seed for reproducibility
 rng(1);
 
@@ -41,15 +44,9 @@ observed_signal = generate_output(true_weights, input_matrix, noise);
 % Generate clean output signal (noiseless) for reference/VFF calculation
 clean_signal = generate_output(true_weights, input_matrix, zeros(N,1));
 
-% Visualize the noiseless desired signal
-% figure;
-% plot(clean_signal);
-% title('Desired Signal (Noiseless)');
-% grid on;
-
 %% Algorithm Execution
 
-% 1. RLS with fixed forgetting factor (lambda < 1)
+% 1. RLS with fixed forgetting factor (lambda = 0.95)
 disp('Running RLS (lambda=0.95)...');
 [weights_classic] = classic_rls(input_matrix, observed_signal, P_delta, lambda_rls);
 mis_classic = misalignment(weights_classic, true_weights);
@@ -68,5 +65,5 @@ mis_vff = misalignment(weights_vff, true_weights);
 %% Plotting Results
 disp('Generating plots...');
 generate_plots(true_weights, weights_classic, weights_vff, mis_classic, mis_vff, ...
-               ones(1,N)*lambda_rls, lambda_vff, weights_plain, mis_plain, ones(1,N));
+    ones(1,N)*lambda_rls, lambda_vff, weights_plain, mis_plain, ones(1,N));
 

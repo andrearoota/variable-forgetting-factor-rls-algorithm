@@ -20,7 +20,7 @@ function generate_plots(true_weights, weights_classic, weights_vff, mis_classic,
 %   lambda_plain   - (Optional) Forgetting factor for RLS with λ=1 (N x 1).
 %
 % Output:
-%   Multiple PDF figures saved to 'output/' directory:
+%   Multiple PDF figures saved to 'figures/' directory:
 %     - true_theta_<i>.pdf: True parameter evolution
 %     - theta_<i>.pdf: Parameter tracking comparison
 %     - misalignment.pdf: Tracking error comparison
@@ -44,8 +44,8 @@ for i = 1:L
     set(gca, 'FontSize', 16);
     ylim([-1, 1.5]);
     xlim([0, N]);
-    
-    exportgraphics(gcf, 'output/true_theta_'+string(i)+'.pdf', 'BackgroundColor', 'none', 'ContentType', 'vector');
+
+    exportgraphics(gcf, 'figures/true_theta_'+string(i)+'.pdf', 'BackgroundColor', 'none', 'ContentType', 'vector');
     close(gcf);
 end
 
@@ -56,19 +56,19 @@ for i = 1:L
     hold on;
     plot(weights_classic(:,i), 'b', 'DisplayName', ['$\theta_' num2str(i) '$ ' legend_label], 'LineWidth', 1.5);
     plot(weights_vff(:,i), 'r', 'DisplayName', '$\theta_'+string(i)+'$ VFF', 'LineWidth', 1.5);
-    
+
     if has_plain
         plot(weights_plain(:,i), 'k--', 'DisplayName', 'RLS $\lambda = 1$', 'LineWidth', 1.5);
     end
-    
+
     legend('Interpreter', 'latex', 'Location', 'best', 'FontSize', 14);
     xlabel('Iterations', 'Interpreter', 'latex', 'FontSize', 18);
     grid on;
     set(gca, 'FontSize', 16);
     ylim([-1, 1.5]);
     xlim([0, N]);
-    
-    exportgraphics(gcf, 'output/theta_'+string(i)+'.pdf', 'BackgroundColor', 'none', 'ContentType', 'vector');
+
+    exportgraphics(gcf, 'figures/theta_'+string(i)+'.pdf', 'BackgroundColor', 'none', 'ContentType', 'vector');
     close(gcf);
 end
 
@@ -90,7 +90,7 @@ set(gca, 'FontSize', 16);
 ylim([-60, 10]);
 xlim([0, N]);
 
-exportgraphics(gcf, 'output/misalignment.pdf', 'BackgroundColor', 'none', 'ContentType', 'vector');
+exportgraphics(gcf, 'figures/misalignment.pdf', 'BackgroundColor', 'none', 'ContentType', 'vector');
 close(gcf);
 
 %% Plot 4: Lambda Evolution
@@ -110,7 +110,7 @@ set(gca, 'FontSize', 16);
 ylim([-0.05, 1.05]);
 xlim([0, N]);
 
-exportgraphics(gcf, 'output/lambda.pdf', 'BackgroundColor', 'none', 'ContentType', 'vector');
+exportgraphics(gcf, 'figures/lambda.pdf', 'BackgroundColor', 'none', 'ContentType', 'vector');
 close(gcf);
 
 end
