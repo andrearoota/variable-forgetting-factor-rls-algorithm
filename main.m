@@ -27,10 +27,8 @@ lambda_rls = 0.95; % Fixed forgetting factor for the standard RLS comparison
 start_sin = 200;   % Sample index where sinusoidal variation starts
 
 %% System Generation
-% Define noise power
-sigma_v = 1;
-% Generate Gaussian white noise
-noise = randn(N,1) * sqrt(sigma_v);
+sigma_v = 1;       % Define noise power
+noise = randn(N,1) * sqrt(sigma_v); % Generate Gaussian white noise
 
 % Generate true system parameters (time-varying weights)
 true_weights = generate_true_weights(N, L, start_sin);
@@ -58,7 +56,6 @@ mis_plain = misalignment(weights_plain, true_weights);
 
 % 3. Variable Forgetting Factor RLS (VFF-RLS)
 disp('Running VFF-RLS...');
-% Note: VFF-RLS here uses the clean signal for optimal parameter tuning/oracle comparison
 [weights_vff, lambda_vff] = vff_rls(input_matrix, observed_signal, clean_signal, P_delta, 2, 10);
 mis_vff = misalignment(weights_vff, true_weights);
 

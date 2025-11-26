@@ -1,38 +1,23 @@
 function [weights_history, lambda_history] = vff_rls(input_matrix, desired_signal, desired_signal_clean, delta, K_alpha, K_beta, gamma_threshold, epsilon_small, lambda_max)
-% VFF_RLS Implements Variable Forgetting Factor RLS.
-%
-% This algorithm adaptively adjusts the forgetting factor based on the
-% prediction error power, input signal correlation, and noise variance.
-% It balances tracking speed and noise sensitivity for time-varying systems.
+% VFF_RLS Variable Forgetting Factor RLS algorithm.
 %
 % Inputs:
-%   input_matrix         - Input signal matrix (N x L), where N = samples, L = taps.
-%   desired_signal       - Desired signal vector (N x 1) with measurement noise.
-%   desired_signal_clean - Clean desired signal vector (N x 1) for initialization.
-%                          NOTE: This is oracle knowledge not available in practice.
-%   delta                - Regularization parameter for initializing P (e.g., 10^6).
-%   K_alpha              - Window length parameter for error power estimation.
-%   K_beta               - Window length parameter for noise variance estimation.
-%   gamma_threshold      - Threshold for λ adaptation (optional, default: 1.5).
-%   epsilon_small        - Small constant to avoid division by zero (optional, default: 1e-8).
-%   lambda_max           - Maximum forgetting factor (optional, default: 0.999999).
+%   input_matrix         - Input signal matrix (N x L).
+%   desired_signal       - Desired signal vector (N x 1).
+%   desired_signal_clean - Clean signal for initialization (N x 1).
+%   delta                - Regularization parameter (e.g., 10^6).
+%   K_alpha              - Window length for error power estimation.
+%   K_beta               - Window length for noise variance estimation.
+%   gamma_threshold      - Threshold for λ adaptation (default: 1.5).
+%   epsilon_small        - Division by zero protection (default: 1e-8).
+%   lambda_max           - Maximum forgetting factor (default: 0.999999).
 %
 % Outputs:
-%   weights_history - Estimated filter weights over time (N x L).
-%   lambda_history  - Forgetting factor evolution over time (N x 1).
-%
-% Algorithm:
-%   The forgetting factor λ is adapted based on:
-%     - σ_e: Prediction error power (exponentially weighted)
-%     - σ_q: Input signal correlation measure
-%     - σ_v: Noise variance estimate
-%   When σ_e > γ·σ_v (high tracking error), λ decreases for faster adaptation.
-%   Otherwise, λ = λ_max for stability.
+%   weights_history - Estimated weights over time (N x L).
+%   lambda_history  - Forgetting factor evolution (N x 1).
 %
 % Reference:
-%   Paleologu, C., Benesty, J., & Ciochină, S. (2008). A Robust Variable
-%   Forgetting Factor Recursive Least-Squares Algorithm for System Identification.
-%   IEEE Signal Processing Letters, 15, 597-600.
+%   Paleologu et al. (2008), IEEE Signal Processing Letters, 15, 597-600.
 
 % Set default values for optional parameters
 if nargin < 7 || isempty(gamma_threshold)
