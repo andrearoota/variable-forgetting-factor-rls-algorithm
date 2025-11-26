@@ -1,4 +1,4 @@
-function [weights_history, lambda_history] = vff_rls(input_matrix, desired_signal, desired_signal_clean, delta, K_alpha, K_beta)
+function [weights_history, lambda_history] = vff_rls(input_matrix, desired_signal, desired_signal_clean, delta, K_alpha, K_beta, gamma_threshold, epsilon_small, lambda_max)
 % VFF_RLS Implements Variable Forgetting Factor RLS.
 %
 % Inputs:
@@ -7,17 +7,28 @@ function [weights_history, lambda_history] = vff_rls(input_matrix, desired_signa
 %   desired_signal_clean - Clean desired signal vector (N x 1) (for initialization).
 %   delta                - Regularization parameter.
 %   K_alpha, K_beta      - Parameters for window lengths.
+%   gamma_threshold      - Threshold for forgetting factor adaptation (optional, default: 1.5).
+%   epsilon_small        - Small constant to avoid division by zero (optional, default: 1e-8).
+%   lambda_max           - Maximum forgetting factor (optional, default: 0.999999).
 %
 % Outputs:
 %   weights_history - History of estimated weights.
 %   lambda_history  - History of forgetting factors.
 
+% Set default values for optional parameters
+if nargin < 7 || isempty(gamma_threshold)
+    gamma_threshold = 1.5;
+end
+if nargin < 8 || isempty(epsilon_small)
+    epsilon_small = 1e-8;
+end
+if nargin < 9 || isempty(lambda_max)
+    lambda_max = 0.999999;
+end
+
 [N, num_taps] = size(input_matrix);
 weights = zeros(num_taps, 1);                   % Adaptive filter weights
-gamma_threshold = 1.5;
 inv_corr_matrix = eye(num_taps) * delta;        % Inverse of the input auto-correlation matrix
-epsilon_small = 10^-8;                          % Small constant to avoid division by zero
-lambda_max = 0.999999;
 lambda = lambda_max;                            % Variable Forgetting Factor
 
 alpha = 1 - 1/(K_alpha * num_taps);

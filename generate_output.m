@@ -1,5 +1,5 @@
-function output_signal = ma_realizations(weights, input_matrix, noise)
-% MA_REALIZATIONS Generates the output of a Moving Average (MA) process.
+function output_signal = generate_output(weights, input_matrix, noise)
+% GENERATE_OUTPUT Generates the output signal of a time-varying system.
 %
 % Inputs:
 %   weights      - Time-varying filter weights (N x L).
