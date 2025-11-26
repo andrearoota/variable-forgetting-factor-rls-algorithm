@@ -1,29 +1,14 @@
 function [weights_history] = classic_rls(input_matrix, desired_signal, delta, lambda)
-% CLASSIC_RLS Implements the Classic Recursive Least Squares (RLS) algorithm.
-%
-% This is the standard RLS algorithm with a fixed forgetting factor.
-% It provides exponentially weighted least squares estimation, giving
-% more weight to recent data while gradually forgetting older measurements.
+% CLASSIC_RLS Recursive Least Squares algorithm with fixed forgetting factor.
 %
 % Inputs:
-%   input_matrix   - Input signal matrix (N x L), where N = samples, L = taps.
-%   desired_signal - Desired signal vector (N x 1) with measurement noise.
-%   delta          - Regularization parameter for initializing P (e.g., 10^6).
-%                    Large values give more initial uncertainty.
+%   input_matrix   - Input signal matrix (N x L).
+%   desired_signal - Desired signal vector (N x 1).
+%   delta          - Regularization parameter (e.g., 10^6).
 %   lambda         - Forgetting factor (0 < lambda <= 1).
-%                    lambda = 1: infinite memory (standard least squares)
-%                    lambda < 1: exponential forgetting (tracks time-varying systems)
 %
 % Outputs:
-%   weights_history - Estimated filter weights over time (N x L).
-%
-% Algorithm:
-%   Uses the matrix inversion lemma for efficient recursive updates of
-%   the inverse correlation matrix P. The forgetting factor λ controls
-%   the effective memory length: smaller λ = faster tracking but more noise.
-%
-% Reference:
-%   Haykin, S. (2002). Adaptive Filter Theory (4th ed.). Prentice Hall.
+%   weights_history - Estimated weights over time (N x L).
 
 [N, L] = size(input_matrix);
 
